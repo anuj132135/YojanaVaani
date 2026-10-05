@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-main: 'Outfit', 'Noto Sans Devanagari', system-ui, -apple-system, sans-serif;
+  
+  /* Official YojanaVaani Logo Palette */
+  --logo-orange: #d9824b;
+  --logo-orange-hover: #c46d37;
+  --logo-orange-light: #fdf2e9;
+  --logo-orange-subtle: #fbe6d5;
+  
+  --logo-green: #7f9a68;
+  --logo-green-hover: #678051;
+  --logo-green-light: #f1f6ed;
+  --logo-green-subtle: #dce7d3;
+
+  /* Theme Mapping */
+  --saffron: var(--logo-orange);
+  --saffron-light: var(--logo-orange-light);
+  --saffron-dark: var(--logo-orange-hover);
+
+  --primary: #4a633a; /* Deep Warm Sage */
+  --primary-light: #7f9a68;
+  --primary-subtle: #f1f6ed;
+
+  --emerald: #7f9a68;
+  --emerald-light: #f1f6ed;
+  --emerald-dark: #3a502c;
+
+  --amber: #d9824b;
+  --amber-light: #fdf2e9;
+
+  --rose: #c94a4a;
+  --rose-light: #fdf0f0;
+
+  --bg-main: #faf6ee; /* Soft warm cream background from logo */
+  --bg-card: #ffffff;
+  --bg-subtle: #f2ebe0;
+  
+  --text-main: #2d231e; /* Rich warm text */
+  --text-muted: #6e5f55;
+  --text-inverse: #ffffff;
+
+  --border-color: #e5dab;
+  --border-color: #e5d8c5;
+  --shadow-sm: 0 1px 3px rgba(45, 35, 30, 0.05);
+  --shadow-md: 0 4px 14px rgba(45, 35, 30, 0.08);
+  --shadow-lg: 0 10px 25px rgba(45, 35, 30, 0.12);
+  --shadow-glow: 0 0 25px rgba(217, 130, 75, 0.3);
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] {
+  --bg-main: #171310;
+  --bg-card: #221c17;
+  --bg-subtle: #2d2620;
+
+  --text-main: #faf6ee;
+  --text-muted: #b5a799;
+
+  --border-color: #42382e;
+  --primary-subtle: #2d2620;
+  --saffron-light: #3d2312;
+  --emerald-light: #1c2e14;
+  --amber-light: #3d2312;
+  --rose-light: #3d1414;
+}
+
+/* High Contrast Mode for Visually Impaired Citizens */
+[data-high-contrast="true"] {
+  --bg-main: #000000 !important;
+  --bg-card: #121212 !important;
+  --bg-subtle: #222222 !important;
+  --text-main: #ffff00 !important;
+  --text-muted: #ffffff !important;
+  --border-color: #ffff00 !important;
+  --primary: #ffff00 !important;
+  --primary-light: #ffff00 !important;
+  --saffron: #ff9900 !important;
+  --emerald: #00ff00 !important;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+}
+
+/* Container & Layout Utilities */
+.app-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem 1.5rem;
+}
+
+/* Waveform Mic Animation */
+.mic-pulse-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--logo-orange), #c46d37);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(217, 130, 75, 0.45);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.mic-pulse-button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 12px 28px rgba(217, 130, 75, 0.55);
+}
+
+.mic-pulse-button.is-listening {
+  background: linear-gradient(135deg, #c94a4a, #ab3838);
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(201, 74, 74, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 22px rgba(201, 74, 74, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 74, 74, 0);
+  }
+}
+
+/* Audio Wave Visualizer Bar */
+.audio-wave-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+}
+
+.audio-wave-bar {
+  width: 4px;
+  height: 100%;
+  background-color: var(--logo-orange);
+  border-radius: 2px;
+  animation: wave-bounce 1s ease-in-out infinite alternate;
+}
+.audio-wave-bar:nth-child(2) { animation-delay: 0.15s; }
+.audio-wave-bar:nth-child(3) { animation-delay: 0.3s; }
+.audio-wave-bar:nth-child(4) { animation-delay: 0.45s; }
+.audio-wave-bar:nth-child(5) { animation-delay: 0.6s; }
+
+@keyframes wave-bounce {
+  0% { height: 6px; }
+  100% { height: 24px; }
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.glass-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-primary:hover {
+  background: #374b2a;
+}
+
+.btn-saffron {
+  background: var(--logo-orange);
+  color: white;
+}
+.btn-saffron:hover {
+  background: var(--logo-orange-hover);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--border-color);
+  color: var(--text-main);
+}
+.btn-outline:hover {
+  background: var(--bg-subtle);
+}
+
+.btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+}
+
+.badge-success {
+  background: var(--logo-green-light);
+  color: var(--emerald-dark);
+}
+
+.badge-warning {
+  background: var(--logo-orange-light);
+  color: #a35422;
+}
+
+.badge-danger {
+  background: var(--rose-light);
+  color: #991b1b;
+}
+
+.badge-info {
+  background: var(--primary-subtle);
+  color: var(--primary);
+}
+
+/* Print Styles for Downloadable Kit */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
